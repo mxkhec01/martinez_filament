@@ -37,12 +37,22 @@ class ViewViaje extends ViewRecord
 //    protected ?string $title = $this->record->id;
     protected static string $view = 'filament.resources.viajes.pages.view-viaje';
 
+
+
+
     public function getTitle(): string|Htmlable
     {
         //Gastos del viaje 4626 - CELAYA Operador: MIGUEL SANCHEZ HERNANDEZ
         return ('Gastos del viaje ' . $this->record->id . ' - ' . $this->record->destino . ' | Operador: ' . $this->record->operador->nombre);
 
     }
+
+//    protected function getViewData(): array
+//    {
+//        return [
+//            'viaje' => Viaje::where('id',$this->record->id),
+//        ];
+//    }
 
 
 //    public function table(Table $table): Table

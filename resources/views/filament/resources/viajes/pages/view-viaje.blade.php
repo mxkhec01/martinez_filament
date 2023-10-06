@@ -26,8 +26,13 @@
             <x-slot name="heading" class="bg-blue-300">
                 Gastos del viaje {{$record->id}} total {{$suma_gastos}}
             </x-slot>
+            <x-filament::section>
 
-            {{ dd($this->getTablaCombustible()) }}
+                @foreach (App\Models\Viaje::GASTOS_OTROS as $key => $item)
+                    <livewire:gastos-otros :viaje_id="$record->id" :tipo_gasto="$key" :key="$record->id"/>
+                @endforeach
+            </x-filament::section>
+
         </x-filament::section>
     </x-filament::section>
 </x-filament-panels::page>

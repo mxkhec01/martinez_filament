@@ -43,9 +43,6 @@ class EntregaRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('facturas.numero_factura')
                 ->badge()
                 ,
-
-
-
             ])
             ->filters([
                 //
