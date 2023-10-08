@@ -56,6 +56,6 @@ class GastosOtros extends Component implements HasTable, HasForms
             ->paginated(false);
     }
 
-
+//cambio nuevo
 }
 
