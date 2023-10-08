@@ -131,7 +131,7 @@ class ViajeResource extends Resource
             'index' => Pages\ListViajes::route('/'),
             'create' => Pages\CreateViaje::route('/create'),
             'edit' => Pages\EditViaje::route('/{record}/edit'),
-            'view' => Pages\ViewViaje::route('/{record}'),
+            'view' => Pages\ViewViaje::route('/{record}')
         ];
     }
 }
