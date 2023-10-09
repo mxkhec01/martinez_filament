@@ -2,36 +2,35 @@
 
 namespace App\Livewire;
 
+use App\Models\EvidenciaCaseta;
 use App\Models\EvidenciaOtro;
 use App\Models\Viaje;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Livewire\Component;
 use Filament\Tables\Table;
 
-class GastosOtros extends Component implements HasTable, HasForms
+class GastosCaseta extends Component implements HasTable, HasForms
 {
     use InteractsWithTable, InteractsWithForms;
 
     public int $viaje_id;
-    public string $tipo_gasto;
-
     private float $viajeGasto;
 
 
     public function mount(): void
     {
-        $this->viajeGasto = Viaje::find($this->viaje_id)->gastos()->where('tipo', $this->tipo_gasto)->sum('monto');
+        $this->viajeGasto = Viaje::find($this->viaje_id)->casetas()->sum('monto');
     }
 
     public function render()
     {
-        return view('livewire.otros-gastos', [
+        return view('livewire.casetas-gastos', [
             'viajeGasto' => $this->viajeGasto,
-            'tipoGasto' => $this->tipo_gasto,
             'viajeId' => $this->viaje_id,
         ]);
     }
@@ -39,23 +38,22 @@ class GastosOtros extends Component implements HasTable, HasForms
     public function table(Table $table): Table
     {
         return $table
-            ->query(EvidenciaOtro::query()
+            ->query(EvidenciaCaseta::query()
                 ->with(['viaje'])
-                ->where(['viaje_id' => $this->viaje_id,
-                    'tipo' => $this->tipo_gasto])
-
+                ->where(['viaje_id' => $this->viaje_id,])
             )
             ->columns([
-                TextColumn::make('observaciones'),
+                TextColumn::make('lugar'),
                 TextColumn::make('monto')
                     ->money('MXN')
                     ->numeric('2', '.', ','),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->label('Fecha Gasto')
+                ToggleColumn::make('tag')
+                ->label('Pago con Tag')
+                ->disabled(true),
 
             ])
-            ->paginated(false);
+            ->paginated(false)
+            ;
     }
 
 //cambio nuevo

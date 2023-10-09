@@ -43,7 +43,7 @@ class ViewViaje extends ViewRecord
     public function getTitle(): string|Htmlable
     {
         //Gastos del viaje 4626 - CELAYA Operador: MIGUEL SANCHEZ HERNANDEZ
-        return ('Gastos del viaje ' . $this->record->id . ' - ' . $this->record->destino . ' | Operador: ' . $this->record->operador->nombre);
+        return ('Gastos del viaje ' . $this->record->id . ' - ' . $this->record->destino . ' | Operador: ' . (empty($this->record->operador->nombre) ? '' : $this->record->operador->nombre) );
 
     }
 

@@ -44,4 +44,8 @@ class Cliente extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
+
+    public function viajes(){
+        return $this->belongsToMany(Viaje::class,'entregas');
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ViajeResource\Pages;
 use App\Filament\Resources\ViajeResource\RelationManagers;
 use App\Models\Viaje;
+use Filament\GlobalSearch\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -12,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ViajeResource extends Resource
@@ -19,6 +21,33 @@ class ViajeResource extends Resource
     protected static ?string $model = Viaje::class;
     protected static ?string $recordTitleAttribute = 'id';
 
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Viaje' => $record->id,
+            'Destino' => $record->destino,
+            'Entregas' => $record->entregas->count(),
+        ];
+    }
+
+    public static function getGlobalSearchResultUrl(Model $record): string
+    {
+        return ViajeResource::getUrl('view', ['record' => $record]);
+    }
+
+    public static function getGlobalSearchResultActions(Model $record): array
+    {
+        return [
+            Action::make('ver detalle')
+                ->iconButton()
+                ->icon('heroicon-s-eye')
+                ->url(static::getUrl('view', ['record' => $record])),
+            Action::make('Editar')
+                ->iconButton()
+                ->icon('heroicon-s-pencil')
+                ->url(static::getUrl('edit', ['record' => $record]))
+        ];
+    }
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
