@@ -49,11 +49,10 @@ class GastosOtros extends Component implements HasTable, HasForms
                 TextColumn::make('observaciones'),
                 TextColumn::make('monto')
                     ->money('MXN')
-                    ->numeric('2', '.', ','),
+                    ->alignEnd(),
                 TextColumn::make('created_at')
-                    ->dateTime()
+                    ->dateTime('d-M-y H:i:s')
                     ->label('Fecha Gasto')
-
             ])
             ->paginated(false);
     }
