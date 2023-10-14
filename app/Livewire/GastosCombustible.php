@@ -4,10 +4,16 @@ namespace App\Livewire;
 
 use App\Models\Viaje;
 use App\Models\EvidenciaCombustible;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Infolists\Components\ImageEntry;
+use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Support\Facades\Log;
@@ -56,6 +62,9 @@ class GastosCombustible extends Component implements HasTable, HasForms
             ->columns([
                 TextColumn::make('litros'),
                 TextColumn::make('km'),
+                ViewColumn::make('imagenes')
+                ->view('tables.columns.imagenes-combustible')
+            ,
                 TextColumn::make('monto')
                     ->money('MXN')
                     ->alignEnd(),
@@ -65,6 +74,7 @@ class GastosCombustible extends Component implements HasTable, HasForms
                     ->sortable()
                     ->alignCenter()
                 ,
+
                 TextColumn::make('rendimiento')
                     ->color(function ($record) {
                         Log::debug('Entra en loop Combustible: ' . $record->id);
@@ -75,11 +85,12 @@ class GastosCombustible extends Component implements HasTable, HasForms
                         $this->kilometroAnterior = $record->km;
                         return 'gray';
                     })
-                    ->state(fn($record) =>( $record->km - ($this->kilometroAnterior > 0 ? $this->kilometroAnterior : $record->km) ) / $record->litros)
-                ->alignEnd()
-                ->numeric(2),
+                    ->state(fn($record) => ($record->km - ($this->kilometroAnterior > 0 ? $this->kilometroAnterior : $record->km)) / $record->litros)
+                    ->alignEnd()
+                    ->numeric(2),
 
             ])
+
             ->paginated(false);
     }
 
