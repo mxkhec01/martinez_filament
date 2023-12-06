@@ -1,4 +1,5 @@
 <div class="flex -space-x-2">
+    @dd(filesize(asset('storage' . $getRecord()->foto_url)))
     @if(file_exists(asset('storage' . $getRecord()->foto_url))&& filesize(asset('storage' . $getRecord()->foto_url))>0)
     <a href="{{ asset('storage' . $getRecord()->foto_url) }}" target="_blank"><img
             src="{{ asset('storage' . $getRecord()->foto_url) }}"
