@@ -10,6 +10,7 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Support\Facades\Log;
@@ -57,6 +58,9 @@ class GastosCaseta extends Component implements HasTable, HasForms
                     ->numeric('2', '.', ',')
                     ->money('MXN')
                     ->alignEnd(),
+                ViewColumn::make('imagenes')
+                    ->view('tables.columns.imagenes-caseta')
+                ,
                 IconColumn::make('tag')
                     ->label('Pago con Tag')
                     ->boolean()
